@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  section#top250app
+    header
+      h1.title Top 250 Movies
+      section
+        ul.filters
+          li
+            a(href="#all").filter All
+          li
+            a(href="#unwatched").filter Unwatched
+          li
+            a(href="#watched").filter Watched
+        span#watched-count Watched:
+          span.stat 0
+    ul#movies
