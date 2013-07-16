@@ -5,13 +5,16 @@ block content
     header
       h1.title Top 250 Movies
       section
-        ul.filters
+        ul.topbar
+          li
+            span#watched-count Watched:
+              span.stat 0
           li
             a(href="#all").filter All
           li
             a(href="#unwatched").filter Unwatched
           li
             a(href="#watched").filter Watched
-        span#watched-count Watched:
-          span.stat 0
+          li
+            a(href="#random").random Random
     ul#movies

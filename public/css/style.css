@@ -47,31 +47,38 @@ header {
     margin-left: 5px;
 }
 
-.filters {
+
+.topbar {
+    list-style: none;
     margin: 0;
     padding: 0;
-    list-style: none;
-    position: absolute;
-    right: 0;
-    left: 0;
-    text-align: center;
 }
 
-.filters li {
+.topbar li {
     display: inline;
 }
 
-.filters li a {
-    margin: 5px;
+.topbar li:first-child {
+    margin-right: 70px;
+    float: left;
+}
+
+.topbar li:last-child {
+    float: right;
+}
+
+
+.topbar li a {
     text-decoration: none;
     color: inherit;
+    margin: 5px;
 }
+
 
 .filters .active{
     font-weight: bold;
     color: #54A1C5;
 }
-
 
 #movies {
     padding: 0 15px;

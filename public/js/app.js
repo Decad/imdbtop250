@@ -36,28 +36,29 @@ $(function(){
     })
 
     app.AppView = Backbone.View.extend({
-        el: '#movies',
+        el: '#top250app',
         events: {
-            'click .filter': 'filter'
+            'click .random': 'random'
         },
         initialize: function(){
             this.collection = new app.MovieList()
             this.collection.bind('change', this.render, this);
             this.collection.bind('reset', this.render, this);
             this.collection.bind('filter', this.filter, this);
+            this.collection.bind('random', this.random, this);
             this.collection.fetch({ reset: true })
         },
         render: function() {
             var self = this,
                 watch = 0;
-            $(this.el).html('')
+            $('#movies').html('')
             _(this.collection.models).each(function(movie){
                 var iv = new app.MovieView({
                     model: movie
                 })
                 if(movie.attributes.completed)
                     watch++
-                $(self.el).append(iv.render().el)
+                $('#movies').append(iv.render().el)
             })
             $('#watched-count span').html(watch)
         },
@@ -65,6 +66,14 @@ $(function(){
             _(this.collection.models).each(function(movie){
                 movie.trigger('visable')
             })
+        },
+        random: function(){
+            var unwatched = _.filter(this.collection.models, function(m){ return !m.attributes.completed })
+            _(this.collection.models).each(function(movie){
+                movie.trigger('hide')
+            })
+
+            unwatched[Math.floor(Math.random() * unwatched.length)].trigger('show')
         }
     })
 
@@ -73,10 +82,12 @@ $(function(){
         template: _.template($('#movie-template').html()),
         events: {
             'click .complete': 'toggle',
-            'click a': 'show'
+            'click a': 'showDesc'
         },
         initialize: function(){
             this.model.bind('visable', this.visable, this)
+            this.model.bind('hide', this.hide, this)
+            this.model.bind('show', this.show, this)
         },
         render: function(){
             var renderedContent = this.template(this.model.toJSON());
@@ -86,7 +97,7 @@ $(function(){
         toggle: function() {
             this.model.toggle()
         },
-        show: function() {
+        showDesc: function() {
             $(this.el).find('article').slideToggle()
             return false
         },
@@ -99,6 +110,12 @@ $(function(){
         },
         visable: function(){
             this.$el.toggleClass('hide', this.isHidden())
+        },
+        hide: function(){
+            this.$el.addClass('hide')
+        },
+        show: function(){
+            this.$el.removeClass('hide')
         }
     })
 
