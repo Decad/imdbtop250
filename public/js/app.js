@@ -6,15 +6,19 @@ $(function(){
 
     var Router = Backbone.Router.extend({
         routes: {
-            '*filter': 'setFilter'
+            '*filter': 'filterRouter'
         },
-        setFilter: function(param){
+        filterRouter: function(param) {
             app.filter = param || 'all';
-            app.appView.collection.trigger('filter')
-            $('.filter').removeClass('active')
-            $('.filter[href=#' + param + ']').addClass('active')
+            app.setFilter()
         }
     })
+
+    app.setFilter = function(){
+        app.appView.collection.trigger('filter')
+        $('.filter').removeClass('active')
+        $('.filter[href=#' + app.filter + ']').addClass('active')
+    }
 
     app.Movie = Backbone.Model.extend({
         defaults: {
@@ -38,7 +42,8 @@ $(function(){
     app.AppView = Backbone.View.extend({
         el: '#top250app',
         events: {
-            'click .random': 'random'
+            'click .random': 'random',
+            'keyup .search': 'search'
         },
         initialize: function(){
             this.collection = new app.MovieList()
@@ -61,6 +66,7 @@ $(function(){
                 $('#movies').append(iv.render().el)
             })
             $('#watched-count span').html(watch)
+            app.setFilter()
         },
         filter: function(){
             _(this.collection.models).each(function(movie){
@@ -74,6 +80,22 @@ $(function(){
             })
 
             unwatched[Math.floor(Math.random() * unwatched.length)].trigger('show')
+        },
+        search: function(){
+            var self = this,
+                str = $('.search').val();
+
+            _(this.collection.models).each(function(obj){
+                var complete = obj.attributes.completed
+
+                if(complete && app.filter === 'watched' || !complete && app.filter === 'unwatched'){
+                    if(obj.attributes.title.toLowerCase().indexOf(str.toLowerCase()) === -1) {
+                        obj.trigger('hide')
+                    } else {
+                        obj.trigger('show')
+                    }
+                }
+            })
         }
     })
 
@@ -120,7 +142,7 @@ $(function(){
     })
 
 
-
+    window.app = app
     app.appView = new app.AppView();
     app.Router = new Router();
     Backbone.history.start();

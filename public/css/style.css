@@ -80,8 +80,19 @@ header {
     color: #54A1C5;
 }
 
+.search {
+    border: none;
+    width: 100%;
+    padding: 0 55px;
+    height: 1.3em;
+    margin: 5px 0;
+    font-size: 36px;
+    color: inherit;
+}
+
 #movies {
     padding: 0 15px;
+    margin: 0;
 }
 
 #movies li {
