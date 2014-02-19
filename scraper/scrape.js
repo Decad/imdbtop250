@@ -1,5 +1,5 @@
 var fs = require('fs'),
-    movies = JSON.parse(fs.readFileSync('movies.json')),
+    movies = JSON.parse(fs.readFileSync('../movies.json')),
     cp = require('child_process'),
     running = 0,
     completed = 0,
@@ -33,7 +33,7 @@ function spawnScraper(){
         if(completed < movies.length - alreadyCompleted){
             spawnScraper()
         } else {
-            fs.writeFile('movies.json', JSON.stringify(movies), function(err){
+            fs.writeFile('../movies.json', JSON.stringify(movies), function(err){
                 console.log('Saved')
             })
         }

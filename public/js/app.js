@@ -67,6 +67,7 @@ $(function(){
             })
             $('#watched-count span').html(watch)
             app.setFilter()
+            this.search()
         },
         filter: function(){
             _(this.collection.models).each(function(movie){
@@ -87,8 +88,9 @@ $(function(){
 
             _(this.collection.models).each(function(obj){
                 var complete = obj.attributes.completed
-
-                if(complete && app.filter === 'watched' || !complete && app.filter === 'unwatched'){
+                if(str.length === 0) {
+                    obj.trigger('show')
+                } else if(complete && app.filter === 'watched' || !complete && app.filter === 'unwatched' || app.filter === 'all'){
                     if(obj.attributes.title.toLowerCase().indexOf(str.toLowerCase()) === -1) {
                         obj.trigger('hide')
                     } else {
