@@ -25,7 +25,7 @@ function spawnScraper(){
     ps.stdout.setEncoding('utf8')
     ps.stdout.on('data', function(data){
         movies[i].desc = data.replace(/\n/g, '').trim()
-        console.log("i: ",i , "data: ", data)
+        console.log("i: ", i, "data: ", data)
     })
     ps.on('exit', function(){
         completed++
