@@ -36,11 +36,14 @@ body {
 
 header {
     border-bottom: 1px solid #CCC;
-    padding: 0 15px;
+    padding: 15px;
+    background: #824685;
+    color: white;
 }
 
 .title {
     text-align: center;
+    margin-top: 0;
 }
 
 .stat {
@@ -88,6 +91,7 @@ header {
     margin: 5px 0;
     font-size: 36px;
     color: inherit;
+    border-bottom: 1px solid #E4E4E4;
 }
 
 #movies {
@@ -134,6 +138,7 @@ header {
 
 .complete {
     margin-right: 20px;
+    vertical-align: top;
 }
 
 .toggle:before {
@@ -153,7 +158,7 @@ header {
 }
 
 .toggle:checked:before {
-    color: #55C251;
+    color: #6CAD69;
 }
 
 .hide {
